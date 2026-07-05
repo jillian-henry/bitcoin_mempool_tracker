@@ -6,9 +6,9 @@ use crate::model::raw_mempool::RPCResponse;
 const BITCOIN: &str= "http://127.0.0.1:8332"; 
 
 pub async fn route() -> Router {
-    app = Router::new(); 
-    state = Client::new(); 
-    app.route("model/raw_mempool", get(raw_mempool_route))
+    let app = Router::new(); 
+    let state = Client::new(); 
+    app.route("/model/raw_mempool", get(raw_mempool))
     .with_state(state)
 }
 
@@ -32,8 +32,8 @@ pub async fn raw_mempool(
     let body = serde_json::json!({ 
         "jsonrpc": "2.0",
         "method": "getrawmempool",
-        "params": []
-        "id": 1
+        "params": [],
+        "id": 1,
     });
     send_request(&client, body).await
 }

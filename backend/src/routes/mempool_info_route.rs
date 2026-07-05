@@ -8,7 +8,7 @@ const BITCOIN: &str= "http://127.0.0.1:8332";
 pub async fn route() -> Router { 
     let app = Router::new(); 
     let state = Client::new(); 
-    app.route("model/mempool_info", get(mempool_info_route))
+    app.route("/model/mempool_info", get(mempool_info))
     .with_state(state)
 }
 

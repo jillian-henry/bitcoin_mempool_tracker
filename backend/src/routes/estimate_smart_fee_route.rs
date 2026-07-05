@@ -10,7 +10,7 @@ pub fn route() -> Router {
     let app = Router::new(); // directs traffic 
     let state = Client::new(); 
 
-    app.route("model/estimate_smart_fee/:target", get(estimate_smart_fee_route))
+    app.route("/model/estimate_smart_fee/:target", get(estimate_smart_fee))
     .with_state(state) // method on the router that attaches shared data that handlers can use
 }
 
@@ -18,14 +18,13 @@ pub async fn send_request(
     client: &reqwest::Client,
     body: serde_json::Value
 ) -> Result <estimate_smart_fee::RPCResponse, reqwest::Error> {
-
     client
     .post(BITCOIN)
     .json(&body) // fetches the json body
     .send() // sends the request
     .await?
     .json::<estimate_smart_fee::RPCResponse>()
-    .await?
+    .await // unwraps the Result 
 }
 
 pub async fn estimate_smart_fee(State(client):State<Client>, Path(target): Path<u64>

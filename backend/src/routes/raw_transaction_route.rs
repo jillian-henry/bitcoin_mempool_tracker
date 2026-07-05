@@ -6,9 +6,9 @@ use crate::model::raw_transaction::RPCResponse;
 const BITCOIN: &str= "http://127.0.0.1:8332";
 
 pub async fn route() -> Router {
-    app = Router::new();
-    state = Client::new(); 
-    app.route("model/raw_transaction", get(raw_transaction_route))
+    let app = Router::new();
+    let state = Client::new(); 
+    app.route("/model/raw_transaction", get(raw_transaction))
     .with_state(state)
 }
 
